@@ -3438,6 +3438,10 @@ void TR_LoopVersioner::updateDefinitionsAndCollectProfiledExprs(TR::Node *parent
    if (node->getVisitCount() == visitCount)
       return;
 
+   // Don't profile guards
+   if (parent && parent->isOSRGuard())
+      return;
+
    if(node->getOpCode().isIndirect() && refineAliases())
       collectArrayAliasCandidates(node,visitCount);
 
